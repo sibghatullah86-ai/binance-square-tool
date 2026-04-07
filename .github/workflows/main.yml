@@ -1,0 +1,32 @@
+name: Crypto News Autopilot
+on:
+  schedule:
+    - cron: '0 */12 * * *' # Har 12 ghante baad khud chalega
+  workflow_dispatch: # Manual button (Testing ke liye)
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          
+      - name: Install AI Library
+        run: npm install @google/generative-ai
+        
+      - name: Run AI Engine
+        run: node app.js
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          
+      - name: Save & Push Articles
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add data.json
+          git commit -m "AI: Fresh Trending News Updated" || exit 0
+          git push
