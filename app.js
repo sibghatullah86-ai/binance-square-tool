@@ -7,7 +7,7 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 async function run() {
   try {
     // Hum "gemini-pro" use kar rahe hain kyunki ye har key par chalta hai
-    const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
     
     const prompt = "Write 8 crypto news articles for Binance Square. Return ONLY a JSON array. Each object: {title, content, category (whale, sentiment, security, Bullish, Crash, Volatile)}.";
     
